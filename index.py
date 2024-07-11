@@ -22,3 +22,8 @@ async def get_prompt_response(msg: str = Query(...)):
     # Process the message and generate a response
     response = await process_query(msg)
     return {"response": response}
+
+
+if __name__ == '__main__':
+    import uvicorn
+    uvicorn.run(app)
