@@ -15,7 +15,8 @@ import jq
 load_dotenv('.env')
 
 # Access your API key
-GOOGLE_API = os.getenv("GOOGLE_API")
+# GOOGLE_API = os.getenv("GOOGLE_API")
+GOOGLE_API = os.environ.get('GOOGLE_API')
 
 
 def load_data():
