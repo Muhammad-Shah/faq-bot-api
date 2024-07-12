@@ -15,8 +15,14 @@ app.add_middleware(
 )
 
 
+@app.get("/")
+async def read_root():
+    return {"message": "API is Working."}
+
+
 @app.get("/api/prompts")
 async def get_prompt_response(msg: str = Query(...)):
     # Process the message and generate a response
-    response = await process_query(msg)
-    return {"response": response}
+    # response = await process_query(msg)
+    # return {"response": response}
+    return "API is Working."
