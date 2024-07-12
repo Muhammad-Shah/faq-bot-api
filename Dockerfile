@@ -1,4 +1,4 @@
-FROM python:3.10.14-alpine
+FROM python:3.11
 
 # Set the working directory
 WORKDIR /app
@@ -9,7 +9,8 @@ ENV PYTHONUNBUFFERED 1
 
 # Copy over the requirements file and install the dependencies
 COPY ./requirements.txt .
-RUN pip install --no-cache-dir -r ./requirements.txt
+RUN pip install --upgrade pip
+RUN pip3 install --no-cache-dir -r ./requirements.txt
 
 # Copy over the source code
 COPY . .
