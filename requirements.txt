@@ -1,10 +1,18 @@
 fastapi==0.100.1
 uvicorn==0.23.2
+<<<<<<< HEAD
 chromadb==0.5.3
+=======
+langchain-core==0.2.9
+langchain-community==0.2.0
+>>>>>>> 37c25a8d42a2bac57308cdc9793b28a157d10670
 langchain-google-genai==1.0.6
 jq==1.7.0
 langchain-cohere==0.1.9
+<<<<<<< HEAD
 langchain==0.2.7
 langchain-chroma==0.1.1
 langchain-community==0.2.7
 langchain-core==0.2.16
+=======
+>>>>>>> 37c25a8d42a2bac57308cdc9793b28a157d10670
