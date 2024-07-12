@@ -1,7 +1,4 @@
 import os
-import streamlit as st
-from dotenv import load_dotenv
-from langchain import hub
 from langchain_core.output_parsers import StrOutputParser
 from langchain_cohere.embeddings import CohereEmbeddings
 # from langchain_huggingface import HuggingFaceEmbeddings

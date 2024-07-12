@@ -5,15 +5,13 @@ from api.inget import process_query
 app = FastAPI()
 
 # Allow CORS for the React frontend
-origins = ["http://localhost:3000", "http://localhost:5173",
-           "http://127.0.0.1:5173"]  # Update with your frontend URL
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["*"],  # Allow all origins
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Allow all methods
+    allow_headers=["*"],  # Allow all headers
 )
 
 
