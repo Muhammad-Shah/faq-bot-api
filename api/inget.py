@@ -6,18 +6,19 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.documents import Document
+from dotenv import load_dotenv
 from langchain_chroma import Chroma
 import jq
 
 # # Load environment variables from .env file
-# load_dotenv('.env')
+load_dotenv('.env')
 
 # # Access your API key
-# GOOGLE_API = os.getenv("GOOGLE_API")
-# COHERE_API_KEY = os.getenv("COHERE_API_KEY")
+GOOGLE_API = os.getenv("GOOGLE_API")
+COHERE_API_KEY = os.getenv("COHERE_API_KEY")
 
-GOOGLE_API = os.environ.get("GOOGLE_API")
-COHERE_API_KEY = os.environ("COHERE_API_KEY")
+# GOOGLE_API = os.environ.get("GOOGLE_API")
+# COHERE_API_KEY = os.environ("COHERE_API_KEY")
 
 
 def load_data():
@@ -65,7 +66,7 @@ def load_data():
         print(f"An unexpected error occurred: {e}")
 
 
-@st.cache_resource
+# @st.cache_resource
 def create_embeddings(model_name):
     """
     Creates an instance of `HuggingFaceEmbeddings` with the specified `model_name` and caches it for future use.
@@ -96,7 +97,7 @@ def create_embeddings(model_name):
 #     return results
 
 
-@st.cache_resource
+# @st.cache_resource
 def create_chroma_db(persist_directory, _embeddings):
     """
     Creates a Chroma database using the given persist directory and embedding function.
