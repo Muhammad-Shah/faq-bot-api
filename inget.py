@@ -12,12 +12,15 @@ from langchain_core.documents import Document
 from langchain_chroma import Chroma
 import jq
 
-# Load environment variables from .env file
-load_dotenv('.env')
+# # Load environment variables from .env file
+# load_dotenv('.env')
 
-# Access your API key
-GOOGLE_API = os.getenv("GOOGLE_API")
-COHERE_API_KEY = os.getenv("COHERE_API_KEY")
+# # Access your API key
+# GOOGLE_API = os.getenv("GOOGLE_API")
+# COHERE_API_KEY = os.getenv("COHERE_API_KEY")
+
+GOOGLE_API = os.environ.get("GOOGLE_API")
+COHERE_API_KEY = os.environ("COHERE_API_KEY")
 
 
 def load_data():
