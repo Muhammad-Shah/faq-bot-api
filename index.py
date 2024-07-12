@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
-from inget import process_query
+from api.inget import process_query
 
 app = FastAPI()
 
@@ -22,8 +22,3 @@ async def get_prompt_response(msg: str = Query(...)):
     # Process the message and generate a response
     response = await process_query(msg)
     return {"response": response}
-
-
-if __name__ == '__main__':
-    import uvicorn
-    uvicorn.run(app)

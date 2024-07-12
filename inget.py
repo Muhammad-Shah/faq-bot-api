@@ -1,9 +1,10 @@
 import os
-# import streamlit as st
+import streamlit as st
 from dotenv import load_dotenv
 from langchain import hub
 from langchain_core.output_parsers import StrOutputParser
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_cohere.embeddings import CohereEmbeddings
+# from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.runnables import RunnablePassthrough
 from langchain_core.prompts import ChatPromptTemplate, PromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -15,8 +16,8 @@ import jq
 load_dotenv('.env')
 
 # Access your API key
-# GOOGLE_API = os.getenv("GOOGLE_API")
-GOOGLE_API = os.environ.get('GOOGLE_API')
+GOOGLE_API = os.getenv("GOOGLE_API")
+COHERE_API_KEY = os.getenv("COHERE_API_KEY")
 
 
 def load_data():
@@ -64,7 +65,7 @@ def load_data():
         print(f"An unexpected error occurred: {e}")
 
 
-# @st.cache_resource
+@st.cache_resource
 def create_embeddings(model_name):
     """
     Creates an instance of `HuggingFaceEmbeddings` with the specified `model_name` and caches it for future use.
@@ -78,7 +79,8 @@ def create_embeddings(model_name):
     """
     # Initialize Hugging Face Embeddings with the specified model name
     # This instance is cached for future use within the Streamlit session
-    embeddings = HuggingFaceEmbeddings(model_name=model_name)
+    embeddings = CohereEmbeddings(
+        model=model_name, cohere_api_key=COHERE_API_KEY)
 
     # Return the cached instance of Hugging Face Embeddings
     return embeddings
@@ -94,7 +96,7 @@ def create_embeddings(model_name):
 #     return results
 
 
-# @st.cache_resource
+@st.cache_resource
 def create_chroma_db(persist_directory, _embeddings):
     """
     Creates a Chroma database using the given persist directory and embedding function.
@@ -304,14 +306,14 @@ async def process_query(query):
 
     - If the user's question is irrelevent to customers questions for ecommerce website, the chatbot should respond with: "I'm not familiar with that question."
     - If the user's question does not match the provided context, the chatbot should respond with:
-    "I'm not familiar with that question. Pleas contact ask.maktek.ai"
+    "I'm not familiar with that question."
     \n\n
         {context}
         """
     )
 
     retriever = create_chroma_db(
-        "/vectorstore", create_embeddings("sentence-transformers/all-mpnet-base-v2"))
+        "/vectorstore", create_embeddings("embed-english-light-v3.0"))
     llm = create_llm(model, temperature, max_tokens, top_p, GOOGLE_API)
     prompt = create_prompt(system_prompt)
     rag_chain = create_rag_chain(retriever, prompt, llm)
