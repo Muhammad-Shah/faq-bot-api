@@ -36,14 +36,6 @@ else:
 # GOOGLE_API_KEY = load_secret("GOOGLE_API_KEY")
 # COHERE_API_KEY = load_secret("COHERE_API_KEY")
 
-# Ensure the keys are loaded before using them
-if GOOGLE_API_KEY and COHERE_API_KEY:
-    # Use the keys in your application
-    print(GOOGLE_API_KEY, COHERE_API_KEY)
-    print("Google API Key and Cohere API Key loaded successfully")
-else:
-    print("Failed to load one or more secrets")
-
 
 def load_data():
     """
