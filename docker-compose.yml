@@ -1,0 +1,16 @@
+version: "3.1"
+
+services:
+  web:
+    image: faq-api
+    ports:
+      - "80:80"
+    secrets:
+      - GOOGLE_API_KEY
+      - COHERE_API_KEY
+
+secrets:
+  GOOGLE_API_KEY:
+    external: true
+  COHERE_API_KEY:
+    external: true

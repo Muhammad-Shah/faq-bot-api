@@ -11,14 +11,37 @@ from langchain_chroma import Chroma
 import jq
 
 # # Load environment variables from .env file
-load_dotenv('.env')
+# load_dotenv('.env')
 
 # # Access your API key
-GOOGLE_API = os.getenv("GOOGLE_API")
-COHERE_API_KEY = os.getenv("COHERE_API_KEY")
+# GOOGLE_API_KEY = os.getenv("GOOGLE_API")
+# COHERE_API_KEY = os.getenv("COHERE_API_KEY")
 
-# GOOGLE_API = os.environ.get("GOOGLE_API")
+# GOOGLE_API_KEY = os.environ.get("GOOGLE_API")
 # COHERE_API_KEY = os.environ("COHERE_API_KEY")
+
+# Function to load secrets from Docker secret paths
+
+
+def load_secret(secret_name):
+    try:
+        with open(f'/run/secrets/{secret_name}', 'r') as file:
+            return file.read().strip()
+    except FileNotFoundError:
+        print(f"Secret {secret_name} not found.")
+        return None
+
+
+GOOGLE_API_KEY = load_secret("GOOGLE_API_KEY")
+COHERE_API_KEY = load_secret("COHERE_API_KEY")
+
+# Ensure the keys are loaded before using them
+if GOOGLE_API_KEY and COHERE_API_KEY:
+    # Use the keys in your application
+    print(GOOGLE_API_KEY, COHERE_API_KEY)
+    print("Google API Key and Cohere API Key loaded successfully")
+else:
+    print("Failed to load one or more secrets")
 
 
 def load_data():
@@ -281,7 +304,7 @@ async def process_query(query):
         str: The processed query with any grammar and spelling errors corrected.
     """
 
-    GOOGLE_API = os.getenv("GOOGLE_API")
+    # GOOGLE_API_KEY  = os.getenv("GOOGLE_API_KEY ")
     model = "gemini-1.5-flash"
     temperature = 0.7
     max_tokens = 100
@@ -315,7 +338,7 @@ async def process_query(query):
 
     retriever = create_chroma_db(
         "/vectorstore", create_embeddings("embed-english-light-v3.0"))
-    llm = create_llm(model, temperature, max_tokens, top_p, GOOGLE_API)
+    llm = create_llm(model, temperature, max_tokens, top_p, GOOGLE_API_KEY)
     prompt = create_prompt(system_prompt)
     rag_chain = create_rag_chain(retriever, prompt, llm)
     correction_prompt_template = create_correction_prompt_template(query)
