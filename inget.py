@@ -13,27 +13,28 @@ import jq
 # # Load environment variables from .env file
 # load_dotenv('.env')
 
-# # Access your API key
-# GOOGLE_API_KEY = os.getenv("GOOGLE_API")
-# COHERE_API_KEY = os.getenv("COHERE_API_KEY")
-
-# GOOGLE_API_KEY = os.environ.get("GOOGLE_API")
-# COHERE_API_KEY = os.environ("COHERE_API_KEY")
-
 # Function to load secrets from Docker secret paths
 
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+COHERE_API_KEY = os.getenv("COHERE_API_KEY")
 
-def load_secret(secret_name):
-    try:
-        with open(f'/run/secrets/{secret_name}', 'r') as file:
-            return file.read().strip()
-    except FileNotFoundError:
-        print(f"Secret {secret_name} not found.")
-        return None
+if GOOGLE_API_KEY and COHERE_API_KEY:
+    print("Google API Key and Cohere API Key loaded successfully")
+else:
+    print("Google API Key or Cohere API Key not found.")
 
 
-GOOGLE_API_KEY = load_secret("GOOGLE_API_KEY")
-COHERE_API_KEY = load_secret("COHERE_API_KEY")
+# def load_secret(secret_name):
+#     try:
+#         with open(f'/run/secrets/{secret_name}', 'r') as file:
+#             return file.read().strip()
+#     except FileNotFoundError:
+#         print(f"Secret {secret_name} not found.")
+#         return None
+
+
+# GOOGLE_API_KEY = load_secret("GOOGLE_API_KEY")
+# COHERE_API_KEY = load_secret("COHERE_API_KEY")
 
 # Ensure the keys are loaded before using them
 if GOOGLE_API_KEY and COHERE_API_KEY:
